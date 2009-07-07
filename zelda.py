@@ -3,6 +3,8 @@
 import struct
 import socket
 import sys
+import gzip
+import bz2
 import psyco ; psyco.full()
 
 
@@ -57,16 +59,22 @@ class Compressor:
         self.agentdict = {}
         self.timezone_ = ""
 
-        self.logfile = file(sys.argv[1])
+        self.logname = sys.argv[1]
+        if self.logname[-3:] == ".gz":
+            self.logopen = gzip.open
+        elif self.logname[-4:] == ".bz2":
+            self.logopen = bz2.BZ2File
+        else:
+            self.logopen = open
+
         if len(sys.argv) == 3:
             self.outfile = file(sys.argv[2], "w")
         else:
-            self.outfile = file(sys.argv[1]+".loz", "w")
+            self.outfile = file(self.logname+".loz", "w")
 
         self.run()
 
         self.outfile.close()
-        self.logfile.close()
 
         self.status = 0
 
@@ -80,7 +88,7 @@ class Compressor:
 
     def build_dict(self):
         print "Building dictionary"
-        for linenum, line in enumerate(file(sys.argv[1])):
+        for linenum, line in enumerate(self.logopen(self.logname)):
             if linenum % 100 == 0:
                 print "%d\r" % linenum,
             try:
@@ -155,7 +163,7 @@ class Compressor:
     def write_log(self):
         print "Writing log"
         record_struct = struct.Struct("!LcccccLcclLL")
-        for linenum, line in enumerate(file(sys.argv[1])):
+        for linenum, line in enumerate(self.logopen(self.logname)):
             if linenum % 100 == 0:
                 print "%d\r" % linenum,
             try:
