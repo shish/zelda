@@ -24,8 +24,8 @@ def parse_line(line):
         method, path, proto, status, bytes, other
     ) = line.strip().split(" ", 10)
 
-    if dash1 != "-" or dash2 != "-":
-        raise Exception("Bad format (dashes)")
+    #if dash1 != "-" or dash2 != "-":
+    #    raise Exception("Bad format (dashes)")
     if fulldate[0] != "[" or timezone[-1] != "]":
         raise Exception("Bad format (timestamp)")
     if method[0] != "\"" or proto[-1] != "\"":
