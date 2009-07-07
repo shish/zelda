@@ -6,6 +6,7 @@ import sys
 import psyco ; psyco.full()
 
 
+# from http://code.activestate.com/recipes/65219/
 def dottedQuadToNum(ip):
     "convert decimal dotted quad string to long integer"
     return struct.unpack('!L',socket.inet_aton(ip))[0]
@@ -176,7 +177,7 @@ class Compressor:
                     self.agentdict[agent],
                 ))
             except Exception, e:
-                print e
+                #print e
                 self.outfile.write(record_struct.pack(
                     dottedQuadToNum("0.0.0.1"),
                     chr(0),
