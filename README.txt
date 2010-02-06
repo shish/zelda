@@ -26,7 +26,7 @@ Example compression:
       1342318213 access.log           # original, 1.3GB
        200853665 access.log.loz       # loz, 200MB
         74790313 access.log.lzma      # compressed original, 75MB
-	41398420 access.log.loz.lzma  # compressed loz, 40MB
+        41398420 access.log.loz.lzma  # compressed loz, 40MB
 
 Speed:
  o) The 1.3GB dataset is compressed in under 4 minutes on my Pentium-M 1.7GHz
